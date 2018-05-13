@@ -85,10 +85,28 @@ def handle_calculate_IK(req):
                        [                   0,                   0,            0,               1]])
         T6_7 = T6_7.subs(s)
 
+        T0_2 = T0_1 * T1_2
+        T0_3 = T0_2 * T2_3
+        T0_4 = T0_3 * T3_4
+        T0_5 = T0_4 * T4_5
+        T0_6 = T0_5 * T5_6
+        T0_7 = T0_6 * T6_7
+
+        R_y = Matrix([[ cos(q1),        0,  sin(q1), 0],
+                      [       0,        1,        0, 0],
+                      [-sin(q1),        0,  cos(q1), 0],
+                      [       0,        0,        0, 1]])
+        R_z = Matrix([[ cos(q2), -sin(q2),        0, 0],
+                      [ sin(q2),  cos(q2),        0, 0],
+                      [       0,        0,        1, 0],
+                      [       0,        0,        0, 1]])
+        R_corr = R_z * R_y
+
+        T_total = T0_7 * R_corr
+
 	# Extract rotation matrices from the transformation matrices
 	#
-	#
-        ###
+
 
         # Initialize service response
         joint_trajectory_list = []
@@ -107,14 +125,12 @@ def handle_calculate_IK(req):
                 [req.poses[x].orientation.x, req.poses[x].orientation.y,
                     req.poses[x].orientation.z, req.poses[x].orientation.w])
 
-            ### Your IK code here
 	    # Compensate for rotation discrepancy between DH parameters and Gazebo
-	    #
-	    #
+	    
+	    
 	    # Calculate joint angles using Geometric IK method
-	    #
-	    #
-            ###
+
+
 
             # Populate response for the IK request
             # In the next line replace theta1,theta2...,theta6 by your joint angle variables
