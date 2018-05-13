@@ -34,8 +34,14 @@ def handle_calculate_IK(req):
         alpha0, alpha1, alpha2, alpha3, alpha4, alpha5, alpha6 = symbols('alpha0:7')
 
 	# Create Modified DH parameters
-	#
-	#
+        s = {alpha0:     0, a0:      0, d1:   0.33,
+             alpha1: -pi/2, a1:   0.35, d2:   0.42, q2: -pi/2,
+             alpha2:     0, a2:      0, d3:   1.25,
+             alpha3: -pi/2, a3:   0.96, d4: -0.054,
+             alpha4:  pi/2, a4:   0.54, d5:      0,
+             alpha5: -pi/2, a5:  0.193, d6:      0,
+             alpha6:     0, a6:   0.11, d7:      0, q7: 0}
+
 	# Define Modified DH Transformation matrix
 	#
 	#
