@@ -105,7 +105,33 @@ def handle_calculate_IK(req):
         T_total = T0_7 * R_corr
 
 	# Extract rotation matrices from the transformation matrices
-	#
+        R0_1 = T0_1
+        R0_1.col_del(3)
+        R0_1.row_del(3)
+
+        R1_2 = T1_2
+        R1_2.col_del(3)
+        R1_2.row_del(3)
+
+        R2_3 = T2_3
+        R2_3.col_del(3)
+        R2_3.row_del(3)
+
+        R3_4 = T3_4
+        R3_4.col_del(3)
+        R3_4.row_del(3)
+
+        R4_5 = T4_5
+        R4_5.col_del(3)
+        R4_5.row_del(3)
+
+        R5_6 = T5_6
+        R5_6.col_del(3)
+        R5_6.row_del(3)
+
+        R6_7 = T6_7
+        R6_7.col_del(3)
+        R6_7.row_del(3)
 
 
         # Initialize service response
