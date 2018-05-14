@@ -97,7 +97,8 @@ def handle_calculate_IK(req):
                           [      0,       0,       1]])
 
             # Compensate for rotation discrepancy between DH parameters and Gazebo
-	    
+	    R_corr = R_z.subs(y, pi) * R_y.subs(p, -pi/2)
+
 	    # Calculate joint angles using Geometric IK method
 
 
