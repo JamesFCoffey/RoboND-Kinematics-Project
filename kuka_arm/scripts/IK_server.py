@@ -78,8 +78,25 @@ def handle_calculate_IK(req):
                 [req.poses[x].orientation.x, req.poses[x].orientation.y,
                     req.poses[x].orientation.z, req.poses[x].orientation.w])
 
-	    # Compensate for rotation discrepancy between DH parameters and Gazebo
-	    
+
+            r, p, y = symbols('r p y')
+
+            # Define Roll Matrix about x-axis
+            R_x = Matrix([[      1,       0,       0],
+                          [      0,  cos(r), -sin(r)],
+                          [      0,  sin(r),  cos(r)]])
+
+            # Define Pitch Matrix about y-axis
+            R_y = Matrix([[ cos(p),       0,  sin(p)],
+                          [      0,       1,       0],
+                          [-sin(p),       0,  cos(p)]])
+
+            # Define Yaw Matrix about z-axis
+            R_z = Matrix([[ cos(y), -sin(y),       0],
+                          [ sin(y),  cos(y),       0],
+                          [      0,       0,       1]])
+
+            # Compensate for rotation discrepancy between DH parameters and Gazebo
 	    
 	    # Calculate joint angles using Geometric IK method
 
