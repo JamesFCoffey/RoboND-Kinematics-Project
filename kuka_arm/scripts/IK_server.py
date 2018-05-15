@@ -107,6 +107,12 @@ def handle_calculate_IK(req):
             WC = EE - (0.11) * Rrpy(:,2)
 
             # Calculate joint angles using Geometric IK method
+            theta1 = atan2(WC[1],WC[0])
+            theta2 = 
+            theta3 =
+            theta4 =
+            theta5 = 
+            theta6 = 
 
             # Populate response for the IK request
             # In the next line replace theta1,theta2...,theta6 by your joint angle variables
