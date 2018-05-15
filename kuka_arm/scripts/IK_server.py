@@ -101,6 +101,11 @@ def handle_calculate_IK(req):
 
             Rrpy = R_x.subs(r, roll) * R_y.subs(p, pitch) * R_z.subs(y, yaw) * R_corr
 
+            # Calculate Wrist Center position
+            EE = Matrix([[px], [py], [pz]])
+
+            WC = EE - (0.11) * Rrpy(:,2)
+
             # Calculate joint angles using Geometric IK method
 
             # Populate response for the IK request
