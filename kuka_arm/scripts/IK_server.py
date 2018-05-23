@@ -104,10 +104,17 @@ def handle_calculate_IK(req):
             # Calculate Wrist Center position
             EE = Matrix([[px], [py], [pz]])
 
-            WC = EE - (0.11) * Rrpy(:,2)
+            WC = EE - (0.303) * Rrpy(:,2)
 
             # Calculate joint angles using Geometric IK method
             theta1 = atan2(WC[1],WC[0])
+
+            # Calculate Sides of Triangle Formed by Origin 2, Origin 3, and the WC Origin
+            Side_A = sqrt(-0.054^2+1.50^2)
+            Side_B = sqrt(sqrt(WC[0]^2 + WC[1]^2) - 0.35)^2 + (WC[2]-0.75)^2)
+            Side_C = sqrt(1.25^2+0^2)
+
+            
             theta2 = 
             theta3 =
             theta4 =
