@@ -119,9 +119,11 @@ def handle_calculate_IK(req):
             angle_b = acos((side_a^2 + side_c^2 - side_b^2) / (2 * side_a * side_c))
             angle_c = acos((side_a^2 + side_b^2 - side_c^2) / (2 * side_a * side_b))
 
-            
-            theta2 = 
-            theta3 =
+            # Calculate theta2 and theta3
+            theta2 = pi / 2 - angle_a - atan2(WC[2] - 0.75, sqrt(WC[0]^2 + WC[1]^2) - 0.35)
+            theta3 = pi / 2 - (angle_b + 0.036)
+
+
             theta4 =
             theta5 = 
             theta6 = 
