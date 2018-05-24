@@ -62,14 +62,104 @@ def test_code(test_case):
     ########################################################################################
     ## 
 
-    ## Insert IK code here!
-    
-    theta1 = 0
-    theta2 = 0
-    theta3 = 0
-    theta4 = 0
-    theta5 = 0
-    theta6 = 0
+    # Create symbols
+    q1, q2, q3, q4, q5, q6, q7 = symbols('q1:8')
+    d1, d2, d3, d4, d5, d6, d7 = symbols('d1:8')
+    a0, a1, a2, a3, a4, a5, a6 = symbols('a0:7')
+    alpha0, alpha1, alpha2, alpha3, alpha4, alpha5, alpha6 = symbols('alpha0:7')
+
+    # Create Modified DH parameters
+    s = {alpha0:     0, a0:      0, d1:   0.75, q1: q1,
+         alpha1: -pi/2, a1:   0.35, d2:      0, q2: q2-pi/2,
+         alpha2:     0, a2:   1.25, d3:      0, q3: q3,
+         alpha3: -pi/2, a3: -0.054, d4:   1.50, q4: q4,
+         alpha4:  pi/2, a4:      0, d5:      0, q5: q5,
+         alpha5: -pi/2, a5:      0, d6:      0, q6: q6,
+         alpha6:     0, a6:      0, d7:  0.303, q7: 0}
+
+    # Define Modified DH Transformation matrix
+    def DHTmatrix(q, d, a, alpha):
+        DHTmatrix = Matrix([[             cos(q),            -sin(q),           0,             a],
+                            [ sin(q1)*cos(alpha), cos(q1)*cos(alpha), -sin(alpha), -sin(alpha)*d],
+                            [ sin(q1)*sin(alpha), cos(q1)*sin(alpha),  cos(alpha),  cos(alpha)*d],
+                            [                  0,                  0,           0,             1]])
+        return DHTmatrix
+
+    # Create individual transformation matrices
+    T0_1 = DHTmatrix(q1, d1, a0, alpha0).subs(s)
+    T1_2 = DHTmatrix(q2, d2, a1, alpha1).subs(s)
+    T2_3 = DHTmatrix(q3, d3, a2, alpha2).subs(s)
+    T3_4 = DHTmatrix(q4, d4, a3, alpha3).subs(s)
+    T4_5 = DHTmatrix(q5, d5, a4, alpha4).subs(s)
+    T5_6 = DHTmatrix(q6, d6, a5, alpha5).subs(s)
+    T6_7 = DHTmatrix(q7, d7, a6, alpha6).subs(s)
+
+    T0_7 = T0_1 * T1_2 * T2_3 * T3_4 * T4_5 * T5_6 * T6_7
+
+    # Extract end-effector position and orientation from request
+    # px,py,pz = end-effector position
+    # roll, pitch, yaw = end-effector orientation
+    px = req.poses[x].position.x
+    py = req.poses[x].position.y
+    pz = req.poses[x].position.z
+
+    (roll, pitch, yaw) = tf.transformations.euler_from_quaternion(
+        [req.poses[x].orientation.x, req.poses[x].orientation.y,
+            req.poses[x].orientation.z, req.poses[x].orientation.w])
+
+    r, p, y = symbols('r p y')
+
+    # Define Roll Matrix about x-axis
+    R_x = Matrix([[      1,       0,       0],
+                  [      0,  cos(r), -sin(r)],
+                  [      0,  sin(r),  cos(r)]])
+
+    # Define Pitch Matrix about y-axis
+    R_y = Matrix([[ cos(p),       0,  sin(p)],
+                  [      0,       1,       0],
+                  [-sin(p),       0,  cos(p)]])
+
+    # Define Yaw Matrix about z-axis
+    R_z = Matrix([[ cos(y), -sin(y),       0],
+                  [ sin(y),  cos(y),       0],
+                  [      0,       0,       1]])
+
+    # Compensate for rotation discrepancy between DH parameters and Gazebo
+    R_corr = R_z.subs(y, pi) * R_y.subs(p, -pi/2)
+
+    Rrpy = R_x.subs(r, roll) * R_y.subs(p, pitch) * R_z.subs(y, yaw) * R_corr
+
+    # Calculate Wrist Center position
+    EE = Matrix([[px], [py], [pz]])
+
+    WC = EE - (0.303) * Rrpy(:,2)
+
+    # Calculate joint angles using Geometric IK method
+    theta1 = atan2(WC[1],WC[0])
+
+    # Calculate Sides of Triangle Formed by Origin 2, Origin 3, and the WC Origin
+    side_a = sqrt(-0.054^2+1.50^2)
+    side_b = sqrt(sqrt(WC[0]^2 + WC[1]^2) - 0.35)^2 + (WC[2]-0.75)^2)
+    side_c = sqrt(1.25^2+0^2)
+
+    # Calculate Angles of Triangle Formed by Origin 2, Origin 3, and the WC Origin
+    angle_a = acos((side_b^2 + side_c^2 - side_a^2) / (2 * side_b * side_c))
+    angle_b = acos((side_a^2 + side_c^2 - side_b^2) / (2 * side_a * side_c))
+    angle_c = acos((side_a^2 + side_b^2 - side_c^2) / (2 * side_a * side_b))
+
+    # Calculate theta2 and theta3
+    theta2 = pi / 2 - angle_a - atan2(WC[2] - 0.75, sqrt(WC[0]^2 + WC[1]^2) - 0.35)
+    theta3 = pi / 2 - (angle_b + 0.036)
+
+    # Calculate theta4, theta5, and theta6
+    R0_3 = T0_1[0:3, 0:3] * T1_2[0:3, 0:3] * T2_3[0:3, 0:3]
+    R0_3 = R0_3.evalf(subs={q1: theta1, q2: theta2, q3: theta3})
+
+    R3_6 = R0_3.inv("LU") * Rrpy
+
+    theta4 = atan2(R3_6[2, 2], -R3_6[0, 2])
+    theta5 = atan2(sqrt(R3_6[0, 2]^2 + R3_6[2, 2]^2), R3_6[1, 2])
+    theta6 = atan2(-R3_6[1, 1], R3_6[1, 0])
 
     ## 
     ########################################################################################
@@ -79,13 +169,14 @@ def test_code(test_case):
     ## as the input and output the position of your end effector as your_ee = [x,y,z]
 
     ## (OPTIONAL) YOUR CODE HERE!
+    FK = T0_7.evalf(subs={q1: theta1, q2: theta2, q3: theta3, q4: theta4, q5: theta5, q6: theta6})
 
     ## End your code input for forward kinematics here!
     ########################################################################################
 
     ## For error analysis please set the following variables of your WC location and EE location in the format of [x,y,z]
-    your_wc = [1,1,1] # <--- Load your calculated WC values in this array
-    your_ee = [1,1,1] # <--- Load your calculated end effector value from your forward kinematics
+    your_wc = [WC[0],WC[1],WC[2]] # <--- Load your calculated WC values in this array
+    your_ee = [FK[0,3],FK[1,3],FK[2,3]] # <--- Load your calculated end effector value from your forward kinematics
     ########################################################################################
 
     ## Error analysis
