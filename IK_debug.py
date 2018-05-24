@@ -80,8 +80,8 @@ def test_code(test_case):
     # Define Modified DH Transformation matrix
     def DHTmatrix(q, d, a, alpha):
         DHTmatrix = Matrix([[             cos(q),            -sin(q),           0,             a],
-                            [ sin(q1)*cos(alpha), cos(q1)*cos(alpha), -sin(alpha), -sin(alpha)*d],
-                            [ sin(q1)*sin(alpha), cos(q1)*sin(alpha),  cos(alpha),  cos(alpha)*d],
+                            [ sin(q)*cos(alpha), cos(q)*cos(alpha), -sin(alpha), -sin(alpha)*d],
+                            [ sin(q)*sin(alpha), cos(q)*sin(alpha),  cos(alpha),  cos(alpha)*d],
                             [                  0,                  0,           0,             1]])
         return DHTmatrix
 
@@ -138,7 +138,7 @@ def test_code(test_case):
     theta1 = atan2(WC[1],WC[0])
 
     # Calculate Sides of Triangle Formed by Origin 2, Origin 3, and the WC Origin
-    side_a = sqrt(-0.054**2+1.50**2)
+    side_a = sqrt((-0.054)**2+1.50**2)
     side_b = sqrt((sqrt(WC[0]**2 + WC[1]**2) - 0.35)**2 + (WC[2]-0.75)**2)
     side_c = sqrt(1.25**2+0**2)
 

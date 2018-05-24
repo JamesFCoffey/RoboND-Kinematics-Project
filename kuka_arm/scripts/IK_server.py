@@ -45,8 +45,8 @@ def handle_calculate_IK(req):
 	# Define Modified DH Transformation matrix
         def DHTmatrix(q, d, a, alpha):
             DHTmatrix = Matrix([[             cos(q),            -sin(q),           0,             a],
-                                [ sin(q1)*cos(alpha), cos(q1)*cos(alpha), -sin(alpha), -sin(alpha)*d],
-                                [ sin(q1)*sin(alpha), cos(q1)*sin(alpha),  cos(alpha),  cos(alpha)*d],
+                                [ sin(q)*cos(alpha), cos(q)*cos(alpha), -sin(alpha), -sin(alpha)*d],
+                                [ sin(q)*sin(alpha), cos(q)*sin(alpha),  cos(alpha),  cos(alpha)*d],
                                 [                  0,                  0,           0,             1]])
             return DHTmatrix
 
