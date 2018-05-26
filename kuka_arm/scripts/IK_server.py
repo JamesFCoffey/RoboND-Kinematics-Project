@@ -110,9 +110,9 @@ def handle_calculate_IK(req):
             theta1 = atan2(WC[1],WC[0])
 
             # Calculate Sides of Triangle Formed by Origin 2, Origin 3, and the WC Origin
-            side_a = sqrt(-0.054**2+1.50**2)
+            side_a = 1.5009716852759081944053710341178
             side_b = sqrt((sqrt(WC[0]**2 + WC[1]**2) - 0.35)**2 + (WC[2]-0.75)**2)
-            side_c = sqrt(1.25**2+0**2)
+            side_c = 1.25
 
             # Calculate Angles of Triangle Formed by Origin 2, Origin 3, and the WC Origin
             angle_a = acos((side_b**2 + side_c**2 - side_a**2) / (2 * side_b * side_c))
