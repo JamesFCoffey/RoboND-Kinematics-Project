@@ -111,13 +111,13 @@ def handle_calculate_IK(req):
 
             # Calculate Sides of Triangle Formed by Origin 2, Origin 3, and the WC Origin
             side_a = 1.5009716852759081944053710341178
-            side_b = sqrt((sqrt(WC[0]**2 + WC[1]**2) - 0.35)**2 + (WC[2]-0.75)**2)
+            side_b = sqrt((sqrt(WC[0] * WC[0] + WC[1] * WC[1]) - 0.35)**2 + (WC[2]-0.75)**2)
             side_c = 1.25
 
             # Calculate Angles of Triangle Formed by Origin 2, Origin 3, and the WC Origin
-            angle_a = acos((side_b**2 + side_c**2 - side_a**2) / (2 * side_b * side_c))
-            angle_b = acos((side_a**2 + side_c**2 - side_b**2) / (2 * side_a * side_c))
-            angle_c = acos((side_a**2 + side_b**2 - side_c**2) / (2 * side_a * side_b))
+            angle_a = acos((side_b * side_b + side_c * side_c - side_a * side_a) / (2 * side_b * side_c))
+            angle_b = acos((side_a * side_a + side_c * side_c - side_b * side_b) / (2 * side_a * side_c))
+            angle_c = acos((side_a * side_a + side_b * side_b - side_c * side_c) / (2 * side_a * side_b))
 
             # Calculate theta2 and theta3
             theta2 = pi / 2 - angle_a - atan2(WC[2] - 0.75, sqrt(WC[0]**2 + WC[1]**2) - 0.35)
@@ -130,7 +130,7 @@ def handle_calculate_IK(req):
             R3_6 = R0_3.inv("LU") * Rrpy
 
             theta4 = atan2(R3_6[2, 2], -R3_6[0, 2])
-            theta5 = atan2(sqrt(R3_6[0, 2]**2 + R3_6[2, 2]**2), R3_6[1, 2])
+            theta5 = atan2(sqrt(R3_6[0, 2] * R3_6[0, 2] + R3_6[2, 2] * R3_6[2, 2]), R3_6[1, 2])
             theta6 = atan2(-R3_6[1, 1], R3_6[1, 0])
 
             # Populate response for the IK request
