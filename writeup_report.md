@@ -2,7 +2,7 @@
 
 [//]: # (Image References)
 
-[image1]: ./misc_images/misc1.png
+[image1]: ./misc_images/Kuka_1.jpg
 [image2]: ./misc_images/misc3.png
 [image3]: ./misc_images/misc2.png
 
@@ -20,6 +20,8 @@ You're reading it!
 #### 1. Run the forward_kinematics demo and evaluate the kr210.urdf.xacro file to perform kinematic analysis of Kuka KR210 robot and derive its DH parameters.
 
 I started with a drawn schematic of the Kuka KR210 robot.
+
+![KR210 drawn schematic][image1]
 
 Using the following DH convention from Udacity's "DH Parameter Assignment Algorithm" class notes:
 1. Label all joints from {1, 2, … , n}.
