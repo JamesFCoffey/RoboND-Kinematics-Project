@@ -62,6 +62,18 @@ The values for alpha can be filled out in radians:
 | T<sup>5</sup><sub>6</sub> |      -pi/2 |        |        |           |
 | T<sup>6</sup><sub>7</sub> |          0 |        |        |           |
 
+From the kr210.urdf.xacro file, the joint displacements can be summarized below:
+
+|               Joints               | delta_x | delta_y | delta_z |
+|------------------------------------|---------|---------|---------|
+|  Fixed Base Joint to J<sub>1</sub> |       0 |       0 |    0.33 |
+|     J<sup>1</sup> to J<sub>2</sub> |    0.35 |       0 |    0.42 |
+|     J<sup>2</sup> to J<sub>3</sub> |       0 |       0 |    1.25 |
+|     J<sup>3</sup> to J<sub>4</sub> |    0.96 |       0 |  -0.054 |
+|     J<sup>4</sup> to J<sub>5</sub> |    0.54 |       0 |       0 |
+|     J<sup>5</sup> to J<sub>6</sub> |   0.193 |       0 |       0 |
+|     J<sup>6</sup> to J<sub>7</sub> |    0.11 |       0 |       0 |
+
 |             i             | alpha(i-1) | a(i-1) | d(i-1) |  theta(i) |
 |---------------------------|------------|--------|--------|-----------|
 | T<sup>0</sup><sub>1</sub> |          0 |      0 |   0.75 |        q1 |
