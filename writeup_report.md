@@ -19,6 +19,21 @@ You're reading it!
 ### Kinematic Analysis
 #### 1. Run the forward_kinematics demo and evaluate the kr210.urdf.xacro file to perform kinematic analysis of Kuka KR210 robot and derive its DH parameters.
 
+I started with a drawn schematic of the Kuka KR210 robot.
+
+Using the following DH convention from Udacity's "DH Parameter Assignment Algorithm" class notes:
+1. Label all joints from {1, 2, … , n}.
+2. Label all links from {0, 1, …, n} starting with the fixed base link as 0.
+3. Draw lines through all joints, defining the joint axes.
+4. Assign the Z-axis of each frame to point along its joint axis.
+5. Identify the common normal between each frame Z_hat<sub>i-1</sub> and frame Z_hat<sub>i</sub>.
+6. The endpoints of "intermediate links" (i.e., not the base link or the end effector) are associated with two joint axes, {i} and {i+1}. For i from 1 to n-1, assign the X_hat<sub>i</sub> to be
+    * For skew axes, along the normal between Z_hat<sub>i</sub> and Z_hat<sub>i+1</sub> and pointing from {i} to {i+1}.
+    * For intersecting axes, normal to the plane containing Z_hat<sub>i</sub> and Z_hat<sub>i+1</sub>.
+    * For parallel or coincident axes, the assignment is arbitrary; look for ways to make other DH parameters equal to zero.
+7. For the base link, always choose frame {0} to be coincident with frame {1} when the first joint variable (theta<sub>1</sub> or d<sub>1</sub>) is equal to zero. This will guarantee that alpha<sub>0</sub> = a<sub>1</sub> = 0, and, if joint 1 is a revolute, d<sub>1</sub> = 0. If joint 1 is prismatic, then theta<sub>1</sub> = 0.
+8. For the end effector frame, if joint n is revolute, choose X<sub>n</sub> to be in the direction of X<sub>n-1</sub> when theta<sub>n</sub> = 0 and the origin of frame {n} such that d<sub>n</sub> = 0.
+
 |             i             | alpha(i-1) | a(i-1) | d(i-1) |  theta(i) |
 |-------------------------- |------------|--------|--------|-----------|
 | T<sup>0</sup><sub>1</sub> |          0 |      0 |   0.75 |        q1 |
