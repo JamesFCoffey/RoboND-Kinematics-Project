@@ -19,15 +19,18 @@ You're reading it!
 ### Kinematic Analysis
 #### 1. Run the forward_kinematics demo and evaluate the kr210.urdf.xacro file to perform kinematic analysis of Kuka KR210 robot and derive its DH parameters.
 
-| i | alpha(i-1)  | a(i-1)  | d(i-1)  | theta(i)  |
-|---|---|---|---|---|
-| T<sup>0</sup><sub>1</sub>  |   |   |   |   |
-|   |   |   |   |   |
-|   |   |   |   |   |
-|   |   |   |   |   |
-|   |   |   |   |   |
-|   |   |   |   |   |
-|   |   |   |   |   |
+
+|             i             | alpha(i-1) | a(i-1) | d(i-1) |  theta(i) |
+|-------------------------- |------------|--------|--------|-----------|
+| T<sup>0</sup><sub>1</sub> |          0 |      0 |   0.75 |        q1 |
+| T<sup>1</sup><sub>2</sub> |      -pi/2 |   0.35 |      0 | q2 - pi/2 |
+| T<sup>2</sup><sub>3</sub> |          0 |   1.25 |      0 |        q3 |
+| T<sup>3</sup><sub>4</sub> |      -pi/2 | -0.054 |   1.50 |        q4 |
+| T<sup>4</sup><sub>5</sub> |       pi/2 |      0 |      0 |        q5 |
+| T<sup>5</sup><sub>6</sub> |      -pi/2 |      0 |      0 |        q6 |
+| T<sup>6</sup><sub>7</sub> |          0 |      0 |  0.303 |         0 |
+
+
 
 #### 2. Using the DH parameter table you derived earlier, create individual transformation matrices about each joint. In addition, also generate a generalized homogeneous transform between base_link and gripper_link using only end-effector(gripper) pose.
 
