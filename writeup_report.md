@@ -38,7 +38,7 @@ Using the following DH convention from Udacity's "DH Parameter Assignment Algori
 8. For the end effector frame, if joint n is revolute, choose X<sub>n</sub> to be in the direction of X<sub>n-1</sub> when theta<sub>n</sub> = 0 and the origin of frame {n} such that d<sub>n</sub> = 0.
 ![KR210 with assigned origins and X-axes][image3]
 
-Given the following angles between the Z-axes and using the the right-hand rule sign convention:
+Given the following angles between the Z-axes and using the right-hand rule sign convention:
 
 |           Relationship Between Z-Axes           | Twist Angle (degrees) |
 |-------------------------------------------------|-----------------------|
