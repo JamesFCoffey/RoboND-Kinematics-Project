@@ -7,6 +7,16 @@
 [image3]: ./misc_images/Kuka_3.jpg
 [image4]: ./misc_images/Kuka_4.jpg
 [image5]: ./misc_images/Kuka_5.jpg
+[image6]: ./misc_images/dh-transform.png
+[image7]: ./misc_images/dh-transform-matrix.png
+[image8]: ./misc_images/T0_1.png
+[image9]: ./misc_images/T1_2.png
+[image10]: ./misc_images/T2_3.png
+[image11]: ./misc_images/T3_4.png
+[image12]: ./misc_images/T4_5.png
+[image13]: ./misc_images/T5_6.png
+[image14]: ./misc_images/T6_7.png
+[image15]: ./misc_images/T0_7.png
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/972/view) Points
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
@@ -115,6 +125,28 @@ The resulting DH paramter table is:
 | T<sup>6</sup><sub>7</sub> |          0 |      0 |  0.303 |         0 |
 
 #### 2. Using the DH parameter table you derived earlier, create individual transformation matrices about each joint. In addition, also generate a generalized homogeneous transform between base_link and gripper_link using only end-effector(gripper) pose.
+
+From Udacity's "Forward Kinematics with Kuka KR210" class notes, as "the DH convention uses four individual transforms,
+
+![dh-transform][image6]
+
+to describe the relative translation and orientation of link (i-1) to link (i). In matrix form, this transform is,"
+
+![dh-transform-matrix][image7]
+
+Filling the matrix out using the DH parameter table, the individual transformation matrices are:
+
+![T0_1][image8]
+![T1_2][image9]
+![T2_3][image10]
+![T3_4][image11]
+![T4_5][image12]
+![T5_6][image13]
+![T6_7][image14]
+
+Multiplying the individual transformation matrices together generates a generalized homogeneous transform between base_link and gripper_link using only end-effector(gripper) pose:
+
+![T0_7][image15]
 
 T<sup>0</sup><sub>7</sub> = Matrix([[((sin(q1)*sin(q4) + sin(q2 + q3)*cos(q1)*cos(q4))*cos(q5) + sin(q5)*cos(q1)*cos(q2 + q3))*cos(q6) - (-sin(q1)*cos(q4) + sin(q4)*sin(q2 + q3)*cos(q1))*sin(q6), -((sin(q1)*sin(q4) + sin(q2 + q3)*cos(q1)*cos(q4))*cos(q5) + sin(q5)*cos(q1)*cos(q2 + q3))*sin(q6) + (sin(q1)*cos(q4) - sin(q4)*sin(q2 + q3)*cos(q1))*cos(q6), -(sin(q1)*sin(q4) + sin(q2 + q3)*cos(q1)*cos(q4))*sin(q5) + cos(q1)*cos(q5)*cos(q2 + q3), -0.303*sin(q1)*sin(q4)*sin(q5) + 1.25*sin(q2)*cos(q1) - 0.303*sin(q5)*sin(q2 + q3)*cos(q1)*cos(q4) - 0.054*sin(q2 + q3)*cos(q1) + 0.303*cos(q1)*cos(q5)*cos(q2 + q3) + 1.5*cos(q1)*cos(q2 + q3) + 0.35*cos(q1)],
 [((sin(q1)*sin(q2 + q3)*cos(q4) - sin(q4)*cos(q1))*cos(q5) + sin(q1)*sin(q5)*cos(q2 + q3))*cos(q6) - (sin(q1)*sin(q4)*sin(q2 + q3) + cos(q1)*cos(q4))*sin(q6), -((sin(q1)*sin(q2 + q3)*cos(q4) - sin(q4)*cos(q1))*cos(q5) + sin(q1)*sin(q5)*cos(q2 + q3))*sin(q6) - (sin(q1)*sin(q4)*sin(q2 + q3) + cos(q1)*cos(q4))*cos(q6), -(sin(q1)*sin(q2 + q3)*cos(q4) - sin(q4)*cos(q1))*sin(q5) + sin(q1)*cos(q5)*cos(q2 + q3),  1.25*sin(q1)*sin(q2) - 0.303*sin(q1)*sin(q5)*sin(q2 + q3)*cos(q4) - 0.054*sin(q1)*sin(q2 + q3) + 0.303*sin(q1)*cos(q5)*cos(q2 + q3) + 1.5*sin(q1)*cos(q2 + q3) + 0.35*sin(q1) + 0.303*sin(q4)*sin(q5)*cos(q1)],
