@@ -5,6 +5,8 @@
 [image1]: ./misc_images/Kuka_1.jpg
 [image2]: ./misc_images/Kuka_2.jpg
 [image3]: ./misc_images/Kuka_3.jpg
+[image4]: ./misc_images/Kuka_4.jpg
+[image5]: ./misc_images/Kuka_5.jpg
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/972/view) Points
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
@@ -74,7 +76,35 @@ From the kr210.urdf.xacro file, the joint displacements can be summarized below:
 |     J<sup>5</sup> to J<sub>6</sub> |   0.193 |       0 |       0 |
 |     J<sup>6</sup> to J<sub>7</sub> |    0.11 |       0 |       0 |
 
-|             i             | alpha(i-1) | a(i-1) | d(i-1) |  theta(i) |
+![DH Parameters from Displacements for Joints 1 to 3][image4]
+
+|             i             | alpha(i-1) | a(i-1) |  d(i)  |  theta(i) |
+|---------------------------|------------|--------|--------|-----------|
+| T<sup>0</sup><sub>1</sub> |          0 |      0 |   0.75 |           |
+| T<sup>1</sup><sub>2</sub> |      -pi/2 |   0.35 |      0 |           |
+| T<sup>2</sup><sub>3</sub> |          0 |   1.25 |      0 |           |
+| T<sup>3</sup><sub>4</sub> |      -pi/2 |        |        |           |
+| T<sup>4</sup><sub>5</sub> |       pi/2 |        |        |           |
+| T<sup>5</sup><sub>6</sub> |      -pi/2 |        |        |           |
+| T<sup>6</sup><sub>7</sub> |          0 |        |        |           |
+
+![DH Parameters from Displacements for Joints 4 to 6][image5]
+
+|             i             | alpha(i-1) | a(i-1) |  d(i)  |  theta(i) |
+|---------------------------|------------|--------|--------|-----------|
+| T<sup>0</sup><sub>1</sub> |          0 |      0 |   0.75 |           |
+| T<sup>1</sup><sub>2</sub> |      -pi/2 |   0.35 |      0 |           |
+| T<sup>2</sup><sub>3</sub> |          0 |   1.25 |      0 |           |
+| T<sup>3</sup><sub>4</sub> |      -pi/2 | -0.054 |   1.50 |           |
+| T<sup>4</sup><sub>5</sub> |       pi/2 |      0 |      0 |           |
+| T<sup>5</sup><sub>6</sub> |      -pi/2 |      0 |      0 |           |
+| T<sup>6</sup><sub>7</sub> |          0 |      0 |  0.303 |           |
+
+The joint parameters (q) can be filled in for theta. As X<sub>1</sub> and X<sub>2</sub> must be separated by 90 degrees, theta(2) must be q2 - pi/2. There is no joint paramter q7, so theta(7) is set to 0.
+
+The resulting DH paramter table is:
+
+|             i             | alpha(i-1) | a(i-1) |  d(i)  |  theta(i) |
 |---------------------------|------------|--------|--------|-----------|
 | T<sup>0</sup><sub>1</sub> |          0 |      0 |   0.75 |        q1 |
 | T<sup>1</sup><sub>2</sub> |      -pi/2 |   0.35 |      0 | q2 - pi/2 |
