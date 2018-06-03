@@ -17,6 +17,26 @@
 [image13]: ./misc_images/T5_6.png
 [image14]: ./misc_images/T6_7.png
 [image15]: ./misc_images/T0_7.png
+[image16]: ./misc_images/Roll_Pitch_Yaw.png
+[image17]: ./misc_images/correction_matrix.png
+[image18]: ./misc_images/R0_6.png
+[image19]: ./misc_images/WC.png
+[image20]: ./misc_images/theta_1_trig.jpg
+[image21]: ./misc_images/theta_1.png
+[image22]: ./misc_images/sides_abc.png
+[image23]: ./misc_images/angles_abc.png
+[image24]: ./misc_images/theta_23_trig.jpg
+[image25]: ./misc_images/theta_3_trig.jpg
+[image26]: ./misc_images/theta_2.png
+[image27]: ./misc_images/theta_3.png
+[image28]: ./misc_images/extrinsicxyz.png
+[image29]: ./misc_images/beta.png
+[image30]: ./misc_images/gamma.gif
+[image31]: ./misc_images/alpha.gif
+[image32]: ./misc_images/R3_6.png
+[image33]: ./misc_images/theta_4.png
+[image34]: ./misc_images/theta_5.png
+[image35]: ./misc_images/theta_6.png
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/972/view) Points
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
@@ -148,17 +168,63 @@ Multiplying the individual transformation matrices together generates a generali
 
 ![T0_7][image15]
 
-T<sup>0</sup><sub>7</sub> = Matrix([[((sin(q1)*sin(q4) + sin(q2 + q3)*cos(q1)*cos(q4))*cos(q5) + sin(q5)*cos(q1)*cos(q2 + q3))*cos(q6) - (-sin(q1)*cos(q4) + sin(q4)*sin(q2 + q3)*cos(q1))*sin(q6), -((sin(q1)*sin(q4) + sin(q2 + q3)*cos(q1)*cos(q4))*cos(q5) + sin(q5)*cos(q1)*cos(q2 + q3))*sin(q6) + (sin(q1)*cos(q4) - sin(q4)*sin(q2 + q3)*cos(q1))*cos(q6), -(sin(q1)*sin(q4) + sin(q2 + q3)*cos(q1)*cos(q4))*sin(q5) + cos(q1)*cos(q5)*cos(q2 + q3), -0.303*sin(q1)*sin(q4)*sin(q5) + 1.25*sin(q2)*cos(q1) - 0.303*sin(q5)*sin(q2 + q3)*cos(q1)*cos(q4) - 0.054*sin(q2 + q3)*cos(q1) + 0.303*cos(q1)*cos(q5)*cos(q2 + q3) + 1.5*cos(q1)*cos(q2 + q3) + 0.35*cos(q1)],
+T<sup>0</sup><sub>7</sub> = `Matrix([[((sin(q1)*sin(q4) + sin(q2 + q3)*cos(q1)*cos(q4))*cos(q5) + sin(q5)*cos(q1)*cos(q2 + q3))*cos(q6) - (-sin(q1)*cos(q4) + sin(q4)*sin(q2 + q3)*cos(q1))*sin(q6), -((sin(q1)*sin(q4) + sin(q2 + q3)*cos(q1)*cos(q4))*cos(q5) + sin(q5)*cos(q1)*cos(q2 + q3))*sin(q6) + (sin(q1)*cos(q4) - sin(q4)*sin(q2 + q3)*cos(q1))*cos(q6), -(sin(q1)*sin(q4) + sin(q2 + q3)*cos(q1)*cos(q4))*sin(q5) + cos(q1)*cos(q5)*cos(q2 + q3), -0.303*sin(q1)*sin(q4)*sin(q5) + 1.25*sin(q2)*cos(q1) - 0.303*sin(q5)*sin(q2 + q3)*cos(q1)*cos(q4) - 0.054*sin(q2 + q3)*cos(q1) + 0.303*cos(q1)*cos(q5)*cos(q2 + q3) + 1.5*cos(q1)*cos(q2 + q3) + 0.35*cos(q1)],
 [((sin(q1)*sin(q2 + q3)*cos(q4) - sin(q4)*cos(q1))*cos(q5) + sin(q1)*sin(q5)*cos(q2 + q3))*cos(q6) - (sin(q1)*sin(q4)*sin(q2 + q3) + cos(q1)*cos(q4))*sin(q6), -((sin(q1)*sin(q2 + q3)*cos(q4) - sin(q4)*cos(q1))*cos(q5) + sin(q1)*sin(q5)*cos(q2 + q3))*sin(q6) - (sin(q1)*sin(q4)*sin(q2 + q3) + cos(q1)*cos(q4))*cos(q6), -(sin(q1)*sin(q2 + q3)*cos(q4) - sin(q4)*cos(q1))*sin(q5) + sin(q1)*cos(q5)*cos(q2 + q3),  1.25*sin(q1)*sin(q2) - 0.303*sin(q1)*sin(q5)*sin(q2 + q3)*cos(q4) - 0.054*sin(q1)*sin(q2 + q3) + 0.303*sin(q1)*cos(q5)*cos(q2 + q3) + 1.5*sin(q1)*cos(q2 + q3) + 0.35*sin(q1) + 0.303*sin(q4)*sin(q5)*cos(q1)],
 [-(sin(q5)*sin(q2 + q3) - cos(q4)*cos(q5)*cos(q2 + q3))*cos(q6) - sin(q4)*sin(q6)*cos(q2 + q3), (sin(q5)*sin(q2 + q3) - cos(q4)*cos(q5)*cos(q2 + q3))*sin(q6) - sin(q4)*cos(q6)*cos(q2 + q3), -sin(q5)*cos(q4)*cos(q2 + q3) - sin(q2 + q3)*cos(q5), -0.303*sin(q5)*cos(q4)*cos(q2 + q3) - 0.303*sin(q2 + q3)*cos(q5) - 1.5*sin(q2 + q3) + 1.25*cos(q2) - 0.054*cos(q2 + q3) + 0.75],
-[0, 0, 0, 1]])
+[0, 0, 0, 1]])`
 
 
 #### 3. Decouple Inverse Kinematics problem into Inverse Position Kinematics and inverse Orientation Kinematics; doing so derive the equations to calculate all individual joint angles.
 
-And here's where you can draw out and show your math for the derivation of your theta angles. 
+Define matrices for roll (x), pitch (y), and yaw (z):
 
+![Roll_Pitch_Yaw][image16]
 
+Calculate correction matrix between DH parameters and Gazebo:
+
+![correction_matrix][image17]
+
+Define Rotation matrix from frames 0 to 6:
+
+![R0_6][image18]
+
+Calculate the wrist center position (Inverse Position Kinematics):
+
+![WC][image19]
+
+![theta_1_trig][image20]
+
+![theta_1][image21]
+
+![sides_abc][image22]
+
+![angles_abc][image23]
+
+![theta_23_trig][image24]
+
+![theta_3_trig][image25]
+
+![theta_2][image26]
+
+![theta_3][image27]
+
+From Udacity class notes "Euler Angles from a Rotation Matrix" (Inverse Orientation Kinematics):
+
+![extrinsicxyz][image28]
+
+![beta][image29]
+
+![gamma][image30]
+
+![alpha][image31]
+
+![R3_6][image32]
+
+![theta_4][image33]
+
+![theta_5][image34]
+
+![theta_6][image35]
 
 ### Project Implementation
 
