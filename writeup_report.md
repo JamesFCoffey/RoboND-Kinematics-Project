@@ -37,6 +37,7 @@
 [image33]: ./misc_images/theta_4.png
 [image34]: ./misc_images/theta_5.png
 [image35]: ./misc_images/theta_6.png
+[image36]: ./misc_images/pick_and_place.jpg
 
 ## [Rubric](https://review.udacity.com/#!/rubrics/972/view) Points
 ### Here I will consider the rubric points individually and describe how I addressed each point in my implementation.  
@@ -230,11 +231,8 @@ From Udacity class notes "Euler Angles from a Rotation Matrix" (Inverse Orientat
 
 #### 1. Fill in the `IK_server.py` file with properly commented python code for calculating Inverse Kinematics based on previously performed Kinematic Analysis. Your code must guide the robot to successfully complete 8/10 pick and place cycles. Briefly discuss the code you implemented and your results. 
 
+I implemented the a basic forward kinetics outside the joint trajectory forward loop to keep the calculation time down. For the inverse kinetics code, I inserted the final value of fixed calculations to reduce the calculation time there too. The implementation might fail in that it did not seem to penalize the number of rotations or tortuosity of the path selected. This might cause the gripped cylinder to fall, whereas more gentle paths would not.  If I were going to pursue this project further, I might improve the code by using the faster NumPy matrix multiplication or writing in C++ which is much faster.
 
-Here I'll talk about the code, what techniques I used, what worked and why, where the implementation might fail and how I might improve it if I were going to pursue this project further.  
+Below is a screenshot of the completed pick and place process.
 
-
-And just for fun, another example image:
-![alt text][image3]
-
-
+![pick_and_place][image36]
