@@ -177,6 +177,8 @@ T<sup>0</sup><sub>7</sub> = `Matrix([[((sin(q1)*sin(q4) + sin(q2 + q3)*cos(q1)*c
 
 #### 3. Decouple Inverse Kinematics problem into Inverse Position Kinematics and inverse Orientation Kinematics; doing so derive the equations to calculate all individual joint angles.
 
+Diagrams were referenced from Udacity's "Pick & Place Walkthrough"
+
 Define matrices for roll (x), pitch (y), and yaw (z):
 
 ![Roll_Pitch_Yaw][image16]
